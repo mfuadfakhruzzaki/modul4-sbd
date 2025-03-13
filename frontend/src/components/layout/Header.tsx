@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold">
-            API<span className="text-primary">FRONTEND</span>
+            API<span className="text-[#FF5D5D]">FRONTEND</span>
           </Link>
 
           {/* Mobile menu button */}
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="font-bold hover:text-primary">
+            <Link href="/" className="font-bold hover:text-[#ff5d5d]">
               Home
             </Link>
 
@@ -57,19 +57,19 @@ const Header: React.FC = () => {
               <>
                 <Link
                   href="/dashboard"
-                  className="font-bold hover:text-primary"
+                  className="font-bold hover:text-[#ff5d5d]"
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/dashboard/products"
-                  className="font-bold hover:text-primary"
+                  className="font-bold hover:text-[#ff5d5d]"
                 >
                   Products
                 </Link>
                 <Link
                   href="/dashboard/users"
-                  className="font-bold hover:text-primary"
+                  className="font-bold hover:text-[#ff5d5d]"
                 >
                   Users
                 </Link>
@@ -99,7 +99,7 @@ const Header: React.FC = () => {
               <li>
                 <Link
                   href="/"
-                  className="block font-bold hover:text-primary"
+                  className="block font-bold hover:text-[#ff5d5d]"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Home
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                   <li>
                     <Link
                       href="/dashboard"
-                      className="block font-bold hover:text-primary"
+                      className="block font-bold hover:text-[#ff5d5d]"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Dashboard
@@ -120,7 +120,7 @@ const Header: React.FC = () => {
                   <li>
                     <Link
                       href="/dashboard/products"
-                      className="block font-bold hover:text-primary"
+                      className="block font-bold hover:text-[#ff5d5d]"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Products
@@ -129,7 +129,7 @@ const Header: React.FC = () => {
                   <li>
                     <Link
                       href="/dashboard/users"
-                      className="block font-bold hover:text-primary"
+                      className="block font-bold hover:text-[#ff5d5d]"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Users
