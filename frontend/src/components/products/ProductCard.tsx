@@ -20,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // For handling image errors
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.src =
-      "https://via.placeholder.com/400x300?text=No+Image";
+      "https://fakeimg.pl/400x300/FF5D5D/ffffff?text=Maaf+Tidak+Ada+Gambar+😢&font_size=40";
   };
 
   return (
