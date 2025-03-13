@@ -1,30 +1,23 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: "#FF5D5D", // vibrant red
-          hover: "#FF3838",
-        },
-        secondary: {
-          DEFAULT: "#5DB8FF", // bright blue
-          hover: "#38A0FF",
-        },
-        accent: {
-          DEFAULT: "#FFD15D", // bright yellow
-          hover: "#FFBF38",
-        },
-        neutral: {
-          DEFAULT: "#EFEFEF", // off-white
-          dark: "#2D2D2D", // almost black
-        },
+        // Custom colors - these will work in Tailwind v4
+        primary: "#FF5D5D", // vibrant red
+        "primary-hover": "#FF3838",
+        secondary: "#5DB8FF", // bright blue
+        "secondary-hover": "#38A0FF",
+        accent: "#FFD15D", // bright yellow
+        "accent-hover": "#FFBF38",
+        "custom-light": "#EFEFEF", // off-white (replacing neutral)
+        "custom-dark": "#2D2D2D", // almost black (replacing neutral-dark)
       },
       fontFamily: {
         sans: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
@@ -42,5 +35,3 @@ const config: Config = {
   },
   plugins: [],
 };
-
-export default config;

@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    @apply bg-neutral text-neutral-dark font-sans;
+    @apply bg-gray-100 text-gray-900 font-sans;
   }
 
   h1,
@@ -29,38 +29,38 @@
 
 @layer components {
   .neo-button {
-    @apply px-6 py-3 bg-primary text-white font-bold text-lg border-3 border-black 
-           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
-           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
-           active:shadow-none;
+    @apply px-6 py-3 bg-red-500 text-white font-bold text-lg border-3 border-black 
+           shadow-lg transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-md active:translate-y-2 active:translate-x-2 
+           active:shadow-sm;
   }
 
   .neo-button-secondary {
-    @apply px-6 py-3 bg-secondary text-white font-bold text-lg border-3 border-black 
-           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
-           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
-           active:shadow-none;
+    @apply px-6 py-3 bg-blue-500 text-white font-bold text-lg border-3 border-black 
+           shadow-lg transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-md active:translate-y-2 active:translate-x-2 
+           active:shadow-sm;
   }
 
   .neo-button-accent {
-    @apply px-6 py-3 bg-accent text-black font-bold text-lg border-3 border-black 
-           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
-           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
-           active:shadow-none;
+    @apply px-6 py-3 bg-yellow-400 text-black font-bold text-lg border-3 border-black 
+           shadow-lg transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-md active:translate-y-2 active:translate-x-2 
+           active:shadow-sm;
   }
 
   .neo-input {
-    @apply px-4 py-3 bg-white border-3 border-black shadow-neo focus:outline-none 
-           focus:shadow-none focus:translate-y-1 focus:translate-x-1 transition-transform 
+    @apply px-4 py-3 bg-white border-3 border-black shadow-lg focus:outline-none 
+           focus:shadow-sm focus:translate-y-1 focus:translate-x-1 transition-transform 
            duration-200 text-lg w-full;
   }
 
   .neo-card {
-    @apply bg-white border-3 border-black shadow-neo p-6 transition-transform;
+    @apply bg-white border-3 border-black shadow-lg p-6 transition-transform;
   }
 
   .neo-link {
-    @apply font-bold underline decoration-4 decoration-primary hover:text-primary 
+    @apply font-bold underline decoration-4 decoration-red-500 hover:text-red-500 
            transition-colors;
   }
 

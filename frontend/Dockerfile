@@ -2,9 +2,16 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# Copy package.json first to leverage Docker cache
+# Copy package files
 COPY package.json ./
-RUN npm install
+# If you use pnpm
+COPY pnpm-lock.yaml ./
+
+# Install dependencies
+# If you use npm
+# RUN npm install
+# If you use pnpm (based on your error logs)
+RUN npm install -g pnpm && pnpm install
 
 # Copy the rest of the application
 COPY . .
@@ -13,10 +20,16 @@ COPY . .
 ENV NEXT_PUBLIC_API_URL=https://backend.fuadfakhruz.id
 
 # Build the application
-RUN npm run build
+# If you use npm
+# RUN npm run build
+# If you use pnpm
+RUN pnpm build
 
 # Expose the port
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "start"]
+# If you use npm
+# CMD ["npm", "start"]
+# If you use pnpm
+CMD ["pnpm", "start"]
