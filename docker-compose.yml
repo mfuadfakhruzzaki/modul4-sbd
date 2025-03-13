@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: demo_api_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: kelompok8
+      MYSQL_DATABASE: demo_api
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: demo_api_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: kelompok8
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+  api:
+    build: .
+    container_name: demo_api_node
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=kelompok8
+      - DB_NAME=demo_api
+      - JWT_SECRET=kelompok8terbaik
+      - PORT=5000
+
+volumes:
+  mysql_data:
