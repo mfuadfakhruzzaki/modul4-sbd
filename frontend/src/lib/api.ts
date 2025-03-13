@@ -1,5 +1,5 @@
 // API base URL - update this to your backend URL
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Types
 export interface User {
@@ -36,6 +36,18 @@ const getAuthHeader = () => {
   return undefined;
 };
 
+// Helper to handle API responses
+const handleResponse = async <T>(response: Response): Promise<T> => {
+  const data = await response.json();
+
+  if (!response.ok) {
+    // Throw error with message from API
+    throw new Error(data.message || `Error: ${response.status}`);
+  }
+
+  return data as T;
+};
+
 // Authentication APIs
 export const registerUser = async (
   nama: string,
@@ -51,13 +63,7 @@ export const registerUser = async (
       body: JSON.stringify({ nama, email, password }),
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Registration failed");
-    }
-
-    return data;
+    return handleResponse(response);
   } catch (error) {
     console.error("Registration error:", error);
     throw error;
@@ -77,13 +83,7 @@ export const loginUser = async (
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Login failed");
-    }
-
-    return data;
+    return handleResponse<LoginResponse>(response);
   } catch (error) {
     console.error("Login error:", error);
     throw error;
@@ -104,13 +104,7 @@ export const getAllUsers = async (): Promise<User[]> => {
       },
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch users");
-    }
-
-    return data;
+    return handleResponse<User[]>(response);
   } catch (error) {
     console.error("Get users error:", error);
     throw error;
@@ -131,13 +125,7 @@ export const getAllProducts = async (): Promise<Product[]> => {
       },
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch products");
-    }
-
-    return data;
+    return handleResponse<Product[]>(response);
   } catch (error) {
     console.error("Get products error:", error);
     throw error;
@@ -147,7 +135,7 @@ export const getAllProducts = async (): Promise<Product[]> => {
 export const addProduct = async (
   nama: string,
   stok: number,
-  link_gambar?: string
+  link_gambar: string | null
 ): Promise<void> => {
   try {
     const authHeader = getAuthHeader();
@@ -155,22 +143,22 @@ export const addProduct = async (
       throw new Error("Authentication required");
     }
 
+    console.log("Adding product:", { nama, stok, link_gambar });
+
     const response = await fetch(`${API_URL}/produk`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         ...authHeader,
       },
-      body: JSON.stringify({ nama, stok, link_gambar }),
+      body: JSON.stringify({
+        nama,
+        stok,
+        link_gambar: link_gambar || null,
+      }),
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to add product");
-    }
-
-    return data;
+    return handleResponse(response);
   } catch (error) {
     console.error("Add product error:", error);
     throw error;

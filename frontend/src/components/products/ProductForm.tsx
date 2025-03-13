@@ -36,7 +36,13 @@ const ProductForm: React.FC = () => {
     // Submit the product
     try {
       setIsLoading(true);
-      await addProduct(nama, stockNum, linkGambar || undefined);
+
+      // Make sure to match the API's expected payload structure
+      await addProduct(
+        nama,
+        stockNum,
+        linkGambar || null // Convert empty string to undefined
+      );
 
       setSuccess(true);
 
@@ -50,7 +56,12 @@ const ProductForm: React.FC = () => {
         router.push("/dashboard/products");
       }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to add product");
+      console.error("Product form submission error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to add product. Please check your connection and try again."
+      );
     } finally {
       setIsLoading(false);
     }
