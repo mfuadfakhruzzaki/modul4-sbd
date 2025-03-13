@@ -81,6 +81,28 @@ services:
       - traefik.http.routers.api.tls=true
       - traefik.http.routers.api.tls.certresolver=myresolver
 
+  frontend:
+    build:
+      context: ./api-frontend
+      dockerfile: Dockerfile
+    container_name: demo_api_frontend
+    restart: always
+    expose:
+      - "3000"
+    depends_on:
+      - api
+    environment:
+      - NEXT_PUBLIC_API_URL=https://backend.fuadfakhruz.id
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`fuadfakhruz.id`)
+      - traefik.http.routers.frontend.entrypoints=web,websecure
+      - traefik.http.services.frontend.loadbalancer.server.port=3000
+      - traefik.http.routers.frontend.tls=true
+      - traefik.http.routers.frontend.tls.certresolver=myresolver
+
 networks:
   dokploy-network:
     external: true
