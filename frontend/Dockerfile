@@ -5,8 +5,8 @@ FROM base AS deps
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json ./
+RUN npm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -14,8 +14,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set the API URL for production build
-ENV NEXT_PUBLIC_API_URL=http://api:5000
+# Set the API URL for production build - This will be used for client-side calls
+# Note: For Next.js, environment variables used in the browser must start with NEXT_PUBLIC_
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://backend.fuadfakhruz.id}
 
 # Build the Next.js application
 RUN npm run build
