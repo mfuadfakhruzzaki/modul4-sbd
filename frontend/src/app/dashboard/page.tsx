@@ -50,7 +50,7 @@ export default function Dashboard() {
       </p>
 
       {error && (
-        <div className="mb-8 p-4 bg-primary text-white border-3 border-black shadow-neo">
+        <div className="mb-8 p-4 bg-[#ff5d5d] text-white border-3 border-black shadow-neo">
           <p className="font-bold">Error: {error}</p>
           <p>There was a problem fetching your dashboard data.</p>
         </div>
@@ -80,7 +80,7 @@ export default function Dashboard() {
           </div>
 
           {/* Users Stats */}
-          <div className="neo-card bg-primary text-white">
+          <div className="neo-card bg-[#ff5d5d] text-white">
             <h2 className="text-2xl font-bold mb-4">Users</h2>
             <p className="text-4xl font-bold mb-6">
               {userCount !== null ? userCount : "—"}
