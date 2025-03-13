@@ -6,9 +6,6 @@ services:
     restart: unless-stopped
     ports:
       - "5000:5000"
-    depends_on:
-      mysql:
-        condition: service_started
     environment:
       - DB_HOST=mysql
       - DB_USER=root
