@@ -17,6 +17,26 @@ const ProductForm: React.FC = () => {
 
   const router = useRouter();
 
+  // Check if image URL is a data URL (base64)
+  const isDataUrl = (url: string) => {
+    return url.startsWith("data:");
+  };
+
+  // Function to validate image URL length
+  const validateImageUrl = (url: string) => {
+    // If it's a data URL (base64), it's likely too large for the database
+    if (isDataUrl(url)) {
+      return "Please use an image hosting service instead of a data URL. Data URLs are too large for the database.";
+    }
+
+    // If it's a regular URL but very long
+    if (url.length > 500) {
+      return "Image URL is too long. Please use a shorter URL (under 500 characters).";
+    }
+
+    return null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -33,15 +53,29 @@ const ProductForm: React.FC = () => {
       return;
     }
 
+    // Validate image URL if provided
+    if (linkGambar) {
+      const urlError = validateImageUrl(linkGambar);
+      if (urlError) {
+        setError(urlError);
+        return;
+      }
+    }
+
     // Submit the product
     try {
       setIsLoading(true);
 
-      // Make sure to match the API's expected payload structure
+      console.log("Adding product:", {
+        nama,
+        stok: stockNum,
+        link_gambar: linkGambar || null,
+      });
+
       await addProduct(
         nama,
         stockNum,
-        linkGambar || null // Convert empty string to undefined
+        linkGambar || null // Ensure empty string is converted to null
       );
 
       setSuccess(true);
@@ -100,13 +134,21 @@ const ProductForm: React.FC = () => {
           required
         />
 
-        <Input
-          id="imageLink"
-          label="Image URL (optional)"
-          placeholder="https://example.com/image.jpg"
-          value={linkGambar}
-          onChange={(e) => setLinkGambar(e.target.value)}
-        />
+        <div className="mb-4">
+          <label htmlFor="imageLink" className="block mb-2 font-bold text-lg">
+            Image URL (optional)
+          </label>
+          <Input
+            id="imageLink"
+            placeholder="https://example.com/image.jpg"
+            value={linkGambar}
+            onChange={(e) => setLinkGambar(e.target.value)}
+          />
+          <p className="mt-1 text-sm text-gray-600">
+            Enter a URL to an image (max 500 characters). Do not use data URLs
+            or base64 encoded images.
+          </p>
+        </div>
 
         <div className="flex flex-col md:flex-row gap-4 mt-6">
           <Button
