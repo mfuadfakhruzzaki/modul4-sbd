@@ -1,0 +1,80 @@
+steps:
+  # Build API image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}",
+        "./restapi-demo",
+      ]
+
+  # Push API image to Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}",
+      ]
+
+  # Tag as latest
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "tag",
+        "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}",
+        "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:latest",
+      ]
+
+  # Push latest tag
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:latest",
+      ]
+
+  # Create a cloud-run-docker-compose.yaml file with the new image
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        cat > cloud-run-docker-compose.yaml << 'EOF'
+        services:
+          api:
+            image: asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}
+            ports:
+              - "8080:8080"
+            environment:
+              - DB_HOST=$$DB_HOST
+              - DB_USER=$$DB_USER
+              - DB_PASSWORD=$$DB_PASSWORD
+              - DB_NAME=$$DB_NAME
+              - JWT_SECRET=$$JWT_SECRET
+              - PORT=8080
+        EOF
+
+  # Deploy to Cloud Run
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "gcloud"
+    args:
+      - "run"
+      - "deploy"
+      - "rest-api-service"
+      - "--image=asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}"
+      - "--platform=managed"
+      - "--region=asia-southeast1"
+      - "--allow-unauthenticated"
+      - "--set-env-vars=DB_HOST=${_DB_HOST},DB_USER=${_DB_USER},DB_PASSWORD=${_DB_PASSWORD},DB_NAME=${_DB_NAME},JWT_SECRET=${_JWT_SECRET}"
+
+substitutions:
+  _DB_HOST: "your-db-host"
+  _DB_USER: "root"
+  _DB_PASSWORD: "kelompok8"
+  _DB_NAME: "demo_api"
+  _JWT_SECRET: "kelompok8terbaik"
+
+images:
+  - "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:${SHORT_SHA}"
+  - "asia-southeast1-docker.pkg.dev/${PROJECT_ID}/rest-api-repo/api:latest"
