@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Button from "@/components/ui/Button";
-import { getAllProducts, getAllUsers, Product, User } from "@/lib/api";
+import { getAllProducts, getAllUsers } from "@/lib/api";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -45,8 +45,8 @@ export default function Dashboard() {
         Welcome to Dashboard
       </h1>
       <p className="text-lg mb-8">
-        Hello, <span className="font-bold">{user?.nama || "User"}</span>! Here's
-        an overview of your data.
+        Hello, <span className="font-bold">{user?.nama || "User"}</span>!
+        Here&apos;s an overview of your data.
       </p>
 
       {error && (
@@ -60,9 +60,9 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2].map((item) => (
             <div key={item} className="neo-card animate-pulse h-48">
-              <div className="h-4 bg-neutral w-1/3 mb-4"></div>
-              <div className="h-10 bg-neutral w-1/2 mb-6"></div>
-              <div className="h-8 bg-neutral w-1/4"></div>
+              <div className="h-4 bg-gray-200 w-1/3 mb-4"></div>
+              <div className="h-10 bg-gray-200 w-1/2 mb-6"></div>
+              <div className="h-8 bg-gray-200 w-1/4"></div>
             </div>
           ))}
         </div>

@@ -25,7 +25,7 @@ const LoginForm: React.FC = () => {
 
     try {
       await login(email, password);
-    } catch (err) {
+    } catch {
       // Error is handled by the auth context
     }
   };
@@ -72,7 +72,7 @@ const LoginForm: React.FC = () => {
         </Button>
 
         <p className="mt-6 text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/auth/register" className="neo-link">
             Register here
           </Link>

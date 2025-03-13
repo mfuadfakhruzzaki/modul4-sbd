@@ -19,8 +19,6 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   fullWidth = false,
 }) => {
-  const baseClass = "neo-button";
-
   let variantClass = "";
   switch (variant) {
     case "secondary":

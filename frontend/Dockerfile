@@ -19,9 +19,6 @@ COPY . .
 # Set API URL environment variable
 ENV NEXT_PUBLIC_API_URL=https://backend.fuadfakhruz.id
 
-# Build the application - skip linting during build
-ENV NEXT_DISABLE_ESLINT_DURING_BUILD=true
-
 # Build the application
 # If you use npm
 # RUN npm run build

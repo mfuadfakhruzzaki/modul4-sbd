@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (storedUser) {
         try {
           setUser(JSON.parse(storedUser));
-        } catch (e) {
+        } catch {
           console.error("Failed to parse user data");
         }
       }
