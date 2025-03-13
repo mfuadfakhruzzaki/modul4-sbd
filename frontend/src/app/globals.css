@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-neutral text-neutral-dark font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+@layer components {
+  .neo-button {
+    @apply px-6 py-3 bg-primary text-white font-bold text-lg border-3 border-black 
+           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
+           active:shadow-none;
+  }
+
+  .neo-button-secondary {
+    @apply px-6 py-3 bg-secondary text-white font-bold text-lg border-3 border-black 
+           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
+           active:shadow-none;
+  }
+
+  .neo-button-accent {
+    @apply px-6 py-3 bg-accent text-black font-bold text-lg border-3 border-black 
+           shadow-neo transform transition-transform duration-200 hover:translate-y-1 
+           hover:translate-x-1 hover:shadow-none active:translate-y-2 active:translate-x-2 
+           active:shadow-none;
+  }
+
+  .neo-input {
+    @apply px-4 py-3 bg-white border-3 border-black shadow-neo focus:outline-none 
+           focus:shadow-none focus:translate-y-1 focus:translate-x-1 transition-transform 
+           duration-200 text-lg w-full;
+  }
+
+  .neo-card {
+    @apply bg-white border-3 border-black shadow-neo p-6 transition-transform;
+  }
+
+  .neo-link {
+    @apply font-bold underline decoration-4 decoration-primary hover:text-primary 
+           transition-colors;
+  }
+
+  .neo-container {
+    @apply container mx-auto px-4 py-8;
+  }
+}
