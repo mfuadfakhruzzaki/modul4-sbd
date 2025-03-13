@@ -79,7 +79,7 @@ const UserList: React.FC = () => {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-neutral-dark text-white">
+            <tr className="bg-gray-400 text-white">
               <th className="p-4 border-3 border-black text-left">ID</th>
               <th className="p-4 border-3 border-black text-left">Name</th>
               <th className="p-4 border-3 border-black text-left">Email</th>

@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Header from "@/components/layout/Header";
 
-const spaceGrotesk = Space_Grotesk({
+// Define Plus Jakarta Sans font
+const jakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-space-grotesk",
-});
-
-const spaceMono = Space_Mono({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-space-mono",
+  variable: "--font-jakarta-sans",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "API Frontend - Neobrutalism Style",
-  description: "A Next.js frontend for REST API with neobrutalism design style",
+  title: "Modul 4 - Prak SBD - Kelompok 8",
+  description: "Disini ada Fuad, Nezta, Dhafin, dan Wisnu",
 };
 
 export default function RootLayout({
@@ -28,10 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${spaceMono.variable}`}
-    >
+    <html lang="en" className={`${jakartaSans.variable}`}>
       <body>
         <AuthProvider>
           <div className="flex flex-col min-h-screen">
