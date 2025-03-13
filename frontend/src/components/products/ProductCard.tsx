@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "@/components/ui/Card";
 import { Product } from "@/lib/api";
-import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
