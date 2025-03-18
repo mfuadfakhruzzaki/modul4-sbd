@@ -132,6 +132,26 @@ export const getAllProducts = async (): Promise<Product[]> => {
   }
 };
 
+export const getProductById = async (id: string | number): Promise<Product> => {
+  try {
+    const authHeader = getAuthHeader();
+    if (!authHeader) {
+      throw new Error("Authentication required");
+    }
+
+    const response = await fetch(`${API_URL}/produk/${id}`, {
+      headers: {
+        ...authHeader,
+      },
+    });
+
+    return handleResponse<Product>(response);
+  } catch (error) {
+    console.error(`Get product ${id} error:`, error);
+    throw error;
+  }
+};
+
 export const addProduct = async (
   nama: string,
   stok: number,
@@ -161,6 +181,61 @@ export const addProduct = async (
     return handleResponse(response);
   } catch (error) {
     console.error("Add product error:", error);
+    throw error;
+  }
+};
+
+export const updateProduct = async (
+  id: string | number,
+  nama: string,
+  stok: number,
+  link_gambar: string | null
+): Promise<void> => {
+  try {
+    const authHeader = getAuthHeader();
+    if (!authHeader) {
+      throw new Error("Authentication required");
+    }
+
+    console.log("Updating product:", { id, nama, stok, link_gambar });
+
+    const response = await fetch(`${API_URL}/produk/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeader,
+      },
+      body: JSON.stringify({
+        nama,
+        stok,
+        link_gambar: link_gambar || null,
+      }),
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Update product ${id} error:`, error);
+    throw error;
+  }
+};
+
+export const deleteProduct = async (id: string | number): Promise<void> => {
+  try {
+    const authHeader = getAuthHeader();
+    if (!authHeader) {
+      throw new Error("Authentication required");
+    }
+
+    const response = await fetch(`${API_URL}/produk/${id}`, {
+      method: "DELETE",
+      headers: {
+        ...authHeader,
+      },
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Delete product ${id} error:`, error);
     throw error;
   }
 };

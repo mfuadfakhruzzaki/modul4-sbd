@@ -1,6 +1,8 @@
 import React from "react";
 import Card from "@/components/ui/Card";
 import { Product } from "@/lib/api";
+import Link from "next/link";
+import Button from "@/components/ui/Button";
 
 interface ProductCardProps {
   product: Product;
@@ -10,7 +12,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // Format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", {
+    return new Intl.DateTimeFormat("id-ID", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -41,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         ) : (
           <div className="relative h-48 mb-4 border-3 border-black overflow-hidden bg-gray-100 flex items-center justify-center">
             <span className="text-gray-900 text-lg font-medium">
-              No Image Available
+              Gambar tidak tersedia
             </span>
           </div>
         )}
@@ -50,13 +52,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         <div className="flex-grow">
           <div className="flex items-center justify-between mb-2">
-            <span className="font-medium">Stock:</span>
+            <span className="font-medium">Stok:</span>
             <span
               className={`font-bold ${
                 product.stok > 5 ? "text-green-600" : "text-red-600"
               }`}
             >
-              {product.stok} units
+              {product.stok} unit
             </span>
           </div>
 
@@ -66,8 +68,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
 
           <div className="mt-4 text-sm text-gray-900">
-            <div>Created: {formatDate(product.created_at)}</div>
-            <div>Updated: {formatDate(product.updated_at)}</div>
+            <div>Dibuat: {formatDate(product.created_at)}</div>
+            <div>Diperbarui: {formatDate(product.updated_at)}</div>
+          </div>
+
+          <div className="mt-4 pt-4 border-t-2 border-gray-200">
+            <Link
+              href={`/dashboard/products/${product.id_barang}`}
+              className="w-full"
+            >
+              <Button variant="primary" fullWidth>
+                Lihat Detail
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
