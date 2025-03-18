@@ -1,7 +1,7 @@
-import express from "express";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import db from "../config/db";
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const db = require("../config/db");
 const router = express.Router();
 
 // Register
@@ -45,12 +45,12 @@ router.post("/login", (req, res) => {
 });
 
 // Get All Users (butuh autentikasi)
-import authenticateToken from "../middleware/authMiddleware";
-router.get("/users", authenticateToken, (_, res) => {
+const authenticateToken = require("../middleware/authMiddleware");
+router.get("/users", authenticateToken, (req, res) => {
   db.query("SELECT id, nama, email, created_at FROM users", (err, results) => {
     if (err) return res.status(500).json({ message: "Error retrieving users" });
     res.json(results);
   });
 });
 
-export default router;
+module.exports = router;
