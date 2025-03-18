@@ -90,7 +90,7 @@ services:
     depends_on:
       - api
     environment:
-      - NEXT_PUBLIC_API_URL=https://backend.fuadfakhruz.id
+      - NEXT_PUBLIC_API_URL=https://backend.fuadfakhruz.id/v1
     networks:
       - dokploy-network
     labels:
