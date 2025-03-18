@@ -16,6 +16,7 @@ const ProductList: React.FC = () => {
   );
   const [isDeleting, setIsDeleting] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
 
   const fetchProducts = async () => {
     try {
@@ -53,6 +54,12 @@ const ProductList: React.FC = () => {
   const openDeleteModal = (product: Product) => {
     setProductToDelete(product);
     setShowDeleteConfirm(product.id_barang);
+  };
+
+  // Handling image errors
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.src =
+      "https://fakeimg.pl/100x100/FF5D5D/ffffff?text=No+Image&font_size=12";
   };
 
   if (isLoading) {
@@ -96,17 +103,44 @@ const ProductList: React.FC = () => {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold">Produk</h2>
-        <Link href="/dashboard/products/add">
-          <Button variant="accent">+ Tambah Produk Baru</Button>
-        </Link>
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex bg-white border-3 border-black rounded-md overflow-hidden">
+            <button
+              className={`px-4 py-2 ${
+                viewMode === "cards" ? "bg-blue-500 text-white" : "bg-white"
+              }`}
+              onClick={() => setViewMode("cards")}
+            >
+              <span role="img" aria-label="Grid View" className="mr-2">
+                🖼️
+              </span>
+              Kartu
+            </button>
+            <button
+              className={`px-4 py-2 ${
+                viewMode === "table" ? "bg-blue-500 text-white" : "bg-white"
+              }`}
+              onClick={() => setViewMode("table")}
+            >
+              <span role="img" aria-label="Table View" className="mr-2">
+                📋
+              </span>
+              Tabel
+            </button>
+          </div>
+          <Link href="/dashboard/products/add">
+            <Button variant="accent">+ Tambah Produk Baru</Button>
+          </Link>
+        </div>
       </div>
 
-      {/* Table View for Desktop */}
-      <div className="hidden md:block mb-8">
+      {/* Table View */}
+      {viewMode === "table" && (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-200">
+                <th className="p-4 border-3 border-black text-left">Gambar</th>
                 <th className="p-4 border-3 border-black text-left">ID</th>
                 <th className="p-4 border-3 border-black text-left">
                   Nama Produk
@@ -121,6 +155,23 @@ const ProductList: React.FC = () => {
                   key={product.id_barang}
                   className="border-b-2 border-gray-300"
                 >
+                  <td className="p-2 border-3 border-black">
+                    {product.link_gambar ? (
+                      <div className="w-16 h-16 relative overflow-hidden border-2 border-gray-300">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={product.link_gambar}
+                          alt={product.nama}
+                          className="w-full h-full object-cover"
+                          onError={handleImageError}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-xs text-gray-500 border-2 border-gray-300">
+                        Tidak ada gambar
+                      </div>
+                    )}
+                  </td>
                   <td className="p-4 border-3 border-black">
                     {product.id_barang}
                   </td>
@@ -162,14 +213,16 @@ const ProductList: React.FC = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      )}
 
-      {/* Card View for Mobile */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:hidden">
-        {products.map((product) => (
-          <ProductCard key={product.id_barang} product={product} />
-        ))}
-      </div>
+      {/* Card View */}
+      {viewMode === "cards" && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id_barang} product={product} />
+          ))}
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm !== null && productToDelete && (
