@@ -39,7 +39,7 @@ router.post("/login", (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      res.json({ message: "Login successful", token });
+      res.json({ message: "Login successfully", token });
     });
   });
 });
